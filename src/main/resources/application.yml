@@ -2,6 +2,12 @@ spring:
   application:
     name: monitoring-demo
 
+  security:
+    user:
+      name: user
+      password: password
+      roles: tester
+
 management:
   endpoints:
     web:
@@ -10,7 +16,7 @@ management:
         include: [ "health","prometheus", "metrics" ]
   endpoint:
     health:
-      show-details: always
+      show-details: when_authorized
     metrics:
       enabled: true
     prometheus:
