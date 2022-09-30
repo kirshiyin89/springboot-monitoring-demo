@@ -6,14 +6,14 @@ spring:
     user:
       name: user
       password: password
-      roles: tester
+      roles: admin
 
 management:
   endpoints:
     web:
       base-path: /actuator
       exposure:
-        include: [ "health","prometheus", "metrics" ]
+        include: [ "health","prometheus", "metrics", "customEndpoint" ]
   endpoint:
     health:
       show-details: when_authorized
