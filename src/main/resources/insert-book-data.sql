@@ -1,0 +1,2 @@
+INSERT INTO book (id, name, author, amount) VALUES (1, 'The Way of the Peaceful Warrior', 'Dan Milman', 10);
+INSERT INTO book (id, name, author, amount) VALUES (2, 'What happened to us', 'Faith Hogan', 9);

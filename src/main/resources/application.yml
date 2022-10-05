@@ -1,26 +1,26 @@
 spring:
   application:
     name: monitoring-demo
-
-  security:
-    user:
-      name: user
-      password: password
-      roles: admin
-
+  datasource:
+    driverClassName: org.h2.Driver
+    url: jdbc:h2:mem:testdb
+    username: sa
+    password: pass
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    defer-datasource-initialization: true
+  h2:
+    console.enabled: true
+    console.path: /h2-console
 management:
   endpoints:
     web:
       base-path: /actuator
       exposure:
-        include: [ "health","prometheus", "metrics", "customEndpoint" ]
+        include: [ "health" ]
   endpoint:
     health:
-      show-details: when_authorized
-    metrics:
-      enabled: true
-    prometheus:
-      enabled: true
+      show-details: always
 server:
   port: 8080
-
