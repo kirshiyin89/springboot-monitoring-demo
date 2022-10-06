@@ -11,12 +11,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Component
-public class InventoryChecker implements HealthIndicator {
+public class InventoryHealthIndicator implements HealthIndicator {
 
     private final BookRepository bookRepository;
     private static final int MIN_AMOUNT = 10;
 
-    public InventoryChecker(BookRepository bookRepository) {
+    public InventoryHealthIndicator(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
