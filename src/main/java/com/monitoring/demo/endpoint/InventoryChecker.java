@@ -1,12 +1,14 @@
 package com.monitoring.demo.endpoint;
 
-import com.monitoring.demo.repository.BookRepository;
 import com.monitoring.demo.entity.Book;
+import com.monitoring.demo.repository.BookRepository;
 import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Component
 public class InventoryChecker implements HealthIndicator {
@@ -21,11 +23,14 @@ public class InventoryChecker implements HealthIndicator {
     @Override
     public Health health() {
         List<Book> books = bookRepository.findAll();
-        for (Book book : books) {
-            if (book.getAmount() < MIN_AMOUNT) {
-                return Health.down().withDetail("This book is running out of copies: " + book.getName() + ". The minimum amount is " + MIN_AMOUNT + ". Please supply more!", book.getAmount()).build();
-            }
+
+        Map<String, Integer> booksRunningOutCopies = books.stream()
+                .filter(book -> book.getAmount() < MIN_AMOUNT)
+                .collect(Collectors.toMap(Book::getName, Book::getAmount));
+
+        if (!booksRunningOutCopies.isEmpty()) {
+            return Health.down().withDetail("The following books are running out of copies: " + booksRunningOutCopies + ". The minimum amount is: ", MIN_AMOUNT).build();
         }
-        return Health.up().withDetail("All books have enough copies. The minimum required amount is:", MIN_AMOUNT).build();
+        return Health.up().withDetail("All books have enough copies. The minimum amount is:", MIN_AMOUNT).build();
     }
 }
