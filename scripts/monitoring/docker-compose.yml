@@ -4,7 +4,6 @@ services:
 
   prometheus:
     image: prom/prometheus:v2.38.0
-    network_mode: host
     container_name: prometheus-container
     volumes:
       - ./prometheus/:/etc/prometheus/
@@ -17,7 +16,6 @@ services:
   grafana:
     image: grafana/grafana-oss:9.1.4
     user: "$UID:$GID"
-    network_mode: host
     container_name: grafana-container
     depends_on:
       - prometheus
